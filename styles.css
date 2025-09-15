@@ -1,0 +1,196 @@
+:root {
+  --bg: #0f172a;
+  --panel: #111827;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --border: #1f2937;
+  --accent: #a78bfa;
+  --focus: #f59e0b;
+  --primary: #22d3ee;
+  --primary-700: #0e7490;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: url("ImagesPourTraces/voielactee.jpg") center center / cover no-repeat fixed, var(--bg);
+  background-blend-mode: overlay;
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Arial;
+  line-height: 1.45;
+}
+
+/* En-tête */
+.app-header {
+  padding: 2rem 1rem 1rem;
+  text-align: center;
+}
+.app-title {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+}
+.app-subtitle {
+  margin: .3rem 0 0;
+  color: var(--muted);
+}
+
+/* Grille principale */
+.container {
+  width: min(100%, 1024px);
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr; /* mobile: une colonne */
+}
+
+/* Panneaux semi-transparents + effet verre */
+.panel {
+  background: rgba(17, 24, 39, 0.35); /* transparence marquée */
+  border: 1px solid rgba(31, 41, 55, 0.6);
+  border-radius: 14px;
+  padding: 1rem;
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+}
+
+.panel-title {
+  margin: .2rem 0 1rem;
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+
+/* Champs et lignes */
+.row {
+  display: grid;
+  gap: .75rem;
+  grid-template-columns: 1fr;
+  align-items: end;
+}
+.field { display: grid; gap: .35rem; }
+.lbl { font-weight: 600; }
+
+/* Entrées */
+select, input, textarea, button { font-size: 1rem; }
+select, input, textarea {
+  background: rgba(11, 18, 32, 0.6);
+  color: var(--text);
+  border: 1px solid rgba(31, 41, 55, 0.75);
+  border-radius: 10px;
+  padding: .7rem .9rem;
+  outline: none;
+}
+select:focus, input:focus, textarea:focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, .25);
+}
+textarea.code {
+  width: 100%;
+  min-height: 220px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, Monaco, monospace;
+  font-size: .9rem;
+  white-space: pre;
+  resize: vertical;
+  background: rgba(11, 18, 32, 0.55);
+}
+
+/* Zone de glisser/déposer */
+.dropzone {
+  border: 2px dashed rgba(31, 41, 55, 0.8);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  background: rgba(11, 18, 32, 0.45);
+}
+.dropzone.drag {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, .2);
+}
+
+/* Bouton image pour choisir un fichier */
+.file-label { display: inline-block; cursor: pointer; }
+.file-btn {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,.35));
+}
+.file-btn:hover {
+  content: url("ImagesPourTraces/DownloadIGC_hover.png");
+  transform: scale(1.06);
+}
+#fileInput { display: none; }
+
+/* Texte divers */
+.muted { color: var(--muted); }
+.summary p { margin: .2rem 0; }
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: .5rem;
+  margin-top: .5rem;
+  flex-wrap: wrap;
+}
+button {
+  border: 1px solid rgba(31, 41, 55, 0.8);
+  border-radius: 10px;
+  padding: .6rem .9rem;
+  cursor: pointer;
+  background: rgba(11, 18, 32, 0.65);
+  color: var(--text);
+  transition: transform .04s ease, background .2s ease, border-color .2s ease;
+}
+button.primary {
+  color: var(--primary);
+  border-color: var(--primary-700);
+}
+button.secondary { }
+button:hover { background: rgba(11, 18, 32, 0.75); }
+button:active { transform: translateY(1px); }
+button:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Carte */
+.mapbox {
+  width: 100%;
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(31, 41, 55, 0.6);
+  background: rgba(11, 18, 32, 0.3);
+}
+
+/* Pied de page */
+.app-footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 1.2rem 1rem;
+  border-top: 1px solid rgba(31, 41, 55, 0.6);
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.02));
+}
+
+/* Disposition à deux colonnes sur écran large */
+@media (min-width: 780px) {
+  .container {
+    grid-template-columns: 1fr 1fr; /* deux colonnes */
+    grid-auto-rows: minmax(0, auto);
+  }
+  /* 1er panneau (Configuration) colonne 1, 2e (Résumé) colonne 2 */
+  .panel:nth-of-type(1) { grid-column: 1 / 2; }
+  .panel:nth-of-type(2) { grid-column: 2 / 3; }
+  /* Panneau avec classe .full s'étend sur les deux colonnes */
+  .panel.full { grid-column: 1 / 3; }
+
+  .row { grid-template-columns: 1fr 1fr; }
+}
+
+/* Réduction des animations si demandé */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

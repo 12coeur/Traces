@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IGC → KML | Conversions</title>
+  <meta name="description" content="Convertisseur IGC vers KML (parapente/planeur) — 100% client." />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Leaflet (carte) -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+    defer
+  ></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="app-header">
+    <h1 class="app-title">IGC → KML</h1>
+    <p class="app-subtitle">Glissez un fichier IGC et récupérez un KML prêt pour Google Earth.</p>
+  </header>
+
+  <main class="container">
+    <!-- Configuration -->
+    <section class="panel" aria-labelledby="config-title">
+      <h2 id="config-title" class="panel-title">Configuration</h2>
+
+      <div id="dropzone" class="dropzone" tabindex="0" aria-label="Zone de dépôt IGC">
+        <label class="file-label" title="Choisir un fichier IGC" role="button" aria-label="Choisir un fichier IGC">
+          <img src="ImagesPourTraces/DownloadIGC.png" alt="Choisir un fichier IGC" class="file-btn" />
+          <input id="fileInput" type="file" accept=".igc,text/plain" />
+        </label>
+        <p class="muted">Glissez-déposez un fichier .igc ici ou cliquez sur l’icône.</p>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label class="lbl" for="altSource">Altitude</label>
+          <select id="altSource">
+            <option value="gps">GPS (GNSS)</option>
+            <option value="pressure">Pression (baro)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl" for="altMode">Mode KML</label>
+          <select id="altMode">
+            <option value="absolute">absolute</option>
+            <option value="clampToGround">clampToGround</option>
+            <option value="relativeToGround">relativeToGround</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="lbl" for="color">Couleur</label>
+          <input id="color" type="color" value="#ff0055" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label class="lbl" for="name">Nom du vol</label>
+          <input id="name" placeholder="Facultatif" />
+        </div>
+        <div class="field">
+          <label class="lbl" for="thin">Échantillonnage</label>
+          <select id="thin">
+            <option value="1">Tous</option>
+            <option value="2">1/2</option>
+            <option value="5">1/5</option>
+            <option value="10">1/10</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Résumé -->
+    <section class="panel" aria-labelledby="result-title">
+      <h2 id="result-title" class="panel-title">Résumé</h2>
+      <div class="summary">
+        <p id="meta">Aucun fichier chargé.</p>
+        <p id="stats" class="muted"></p>
+      </div>
+      <div class="actions">
+        <button id="convertBtn" class="primary" disabled>Convertir</button>
+        <button id="downloadBtn" class="secondary" disabled>Télécharger</button>
+      </div>
+    </section>
+
+    <!-- Aperçu KML -->
+    <section class="panel full" aria-labelledby="preview-title">
+      <h2 id="preview-title" class="panel-title">Aperçu KML</h2>
+      <textarea id="kmlPreview" readonly class="code" placeholder="Le KML apparaîtra ici…"></textarea>
+    </section>
+
+    <!-- Carte -->
+    <section class="panel full" aria-labelledby="map-title">
+      <h2 id="map-title" class="panel-title">Carte du vol</h2>
+      <div id="map" class="mapbox" aria-label="Carte interactive"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <small>Traitement local. Aucun envoi de données.</small>
+  </footer>
+</body>
+</html>
